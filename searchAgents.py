@@ -412,17 +412,56 @@ def cornersHeuristic(state, problem):
   walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
   
   "*** YOUR CODE HERE ***"
-  now = state[0]   # get start position
-  min = 999999	   # set initial value
-  
+
+  now = state[0]
+  # get start position
+  minimun = 999999
+  # set initial value
   for corner in corners:
-	distance = (( (now[0] - corner[0])**2.0 + (now[1] - corner[1])**2.0 ) ** 0.5) * 2
-	if min == None: min = distance
-	elif min > distance: min = distance
-  return min
-  #print corners
-  
-  return 0 # Default to trivial solution
+    distance = (( (now[0] - corner[0])**2.0 + (now[1] - corner[1])**2.0 ) ** 0.5) * 2
+    if minimun == None:minimun = distance
+    elif minimun > distance:minimun = distance
+  #return minimun  #print corners
+
+  #================================
+
+  #Calculation of absolute distance
+  path1 = pow(state[0][0] - corners[0][0],2)+pow(state[0][1] - corners[0][1],2)
+  path2 = pow(state[0][0] - corners[1][0],2)+pow(state[0][1] - corners[1][1],2)
+  path3 = pow(state[0][0] - corners[2][0],2)+pow(state[0][1] - corners[2][1],2)
+  path4 = pow(state[0][0] - corners[3][0],2)+pow(state[0][1] - corners[3][1],2)
+  path1 = pow(path1,0.5)
+  path2 = pow(path2,0.5)
+  path3 = pow(path3,0.5)
+  path4 = pow(path4,0.5)
+
+  #=================================
+
+  #Fix the absolute distance by state => if corner is not visit
+  closest=0
+  if state[1][0] == False:
+      sumOfDis = abs(state[0][0] - corners[0][0]) + abs(state[0][1] - corners[0][1])
+      if closest == 0 or closest > sumOfDis:
+          closest = sumOfDis
+
+  elif state[1][1] == False:
+      sumOfDis = abs(state[0][0] - corners[1][0]) + abs(state[0][1] - corners[1][1])
+      if closest == 0 or closest > sumOfDis:
+          closest = sumOfDis
+
+  elif state[1][2] == False:
+      sumOfDis = abs(state[0][0] - corners[2][0]) + abs(state[0][1] - corners[2][1])
+      if closest == 0 or closest > sumOfDis:
+          closest = sumOfDis
+
+  elif state[1][3] == False:
+      sumOfDis = abs(state[0][0] - corners[3][0]) + abs(state[0][1] - corners[3][1])
+      if closest == 0 or closest > sumOfDis:
+          closest = sumOfDis
+
+  #================================
+  #return the sum of minimum absolute distance and the fix value
+  return min(path1,path2,path3,path4)+closest+minimun
 
 class AStarCornersAgent(SearchAgent):
   "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
