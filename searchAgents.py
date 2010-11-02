@@ -421,19 +421,6 @@ def cornersHeuristic(state, problem):
     distance = (( (now[0] - corner[0])**2.0 + (now[1] - corner[1])**2.0 ) ** 0.5) * 2
     if minimun == None:minimun = distance
     elif minimun > distance:minimun = distance
-  #return minimun  #print corners
-
-  #================================
-
-  #Calculation of absolute distance
-  path1 = pow(state[0][0] - corners[0][0],2)+pow(state[0][1] - corners[0][1],2)
-  path2 = pow(state[0][0] - corners[1][0],2)+pow(state[0][1] - corners[1][1],2)
-  path3 = pow(state[0][0] - corners[2][0],2)+pow(state[0][1] - corners[2][1],2)
-  path4 = pow(state[0][0] - corners[3][0],2)+pow(state[0][1] - corners[3][1],2)
-  path1 = pow(path1,0.5)
-  path2 = pow(path2,0.5)
-  path3 = pow(path3,0.5)
-  path4 = pow(path4,0.5)
 
   #=================================
 
@@ -461,7 +448,7 @@ def cornersHeuristic(state, problem):
 
   #================================
   #return the sum of minimum absolute distance and the fix value
-  return min(path1,path2,path3,path4)+closest+minimun
+  return closest*200 + minimun*150
 
 class AStarCornersAgent(SearchAgent):
   "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
