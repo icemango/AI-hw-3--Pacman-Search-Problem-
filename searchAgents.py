@@ -412,8 +412,15 @@ def cornersHeuristic(state, problem):
   walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
   
   "*** YOUR CODE HERE ***"
-
-  print corners
+  now = state[0]   # get start position
+  min = 999999	   # set initial value
+  
+  for corner in corners:
+	distance = (( (now[0] - corner[0])**2.0 + (now[1] - corner[1])**2.0 ) ** 0.5) * 2
+	if min == None: min = distance
+	elif min > distance: min = distance
+  return min
+  #print corners
   
   return 0 # Default to trivial solution
 
